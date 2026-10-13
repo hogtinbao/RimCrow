@@ -1,4 +1,4 @@
-·[RimModManager]
+·[RimCrow]
 ├── ·[backend]
 │   ├── ·[ai]
 │   │   ├──  ai_contracts.py
@@ -25,7 +25,6 @@
 │   │   ├──  runtime.py
 │   │   └──  workshop_selection.py
 │   │   
-│   ├── ·[environment]
 │   ├── ·[i18n]
 │   │   ├──  language_registry.py
 │   │   └──  messages.py
@@ -135,11 +134,6 @@
 │   │   
 │   └──  贴图优化说明.md
 │   
-├── ·[docs]
-│   └── ·[superpowers]
-│   
-│       └── ·[plans]
-│       
 ├── ·[frontend]
 │   ├── ·[public]
 │   │   ├── ·[project-assets]

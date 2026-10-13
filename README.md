@@ -528,6 +528,13 @@ main.py     应用入口
 
 </details>
 
+## 致谢 / Credits
+
+- **原作者**：**Inky Feather**（[@Inky-Feather](https://github.com/Inky-Feather)）—— RimCrow（原名 RimModManager）的作者与维护者。本项目的功能、界面与打包流程均由上游仓库 https://github.com/Inky-Feather/RimCrow 提供，版权与许可证归原作者所有。
+- **1.7 兼容问题报告与修复参考**：[@1579486875](https://github.com/1579486875) —— 报告并定位了 RimWorld 1.7（Waylith 引擎）导致的游戏识别失败问题（issue #24 / PR #25，包含 1.7 磁盘布局对照表与实机验证）。
+
+详细说明见 [致谢与来源说明](./doc/致谢.md)。
+
 ## License
 
 MIT

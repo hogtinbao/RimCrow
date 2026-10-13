@@ -1,5 +1,5 @@
 # backend/_version.py
-__version__ = "0.24.7"  # 主版本.次版本.补丁
+__version__ = "0.24.8"  # 主版本.次版本.补丁
 __db_version__ = "5"
 __build__ = "dev"  # dev, alpha, beta, stable, release
 
@@ -7,6 +7,20 @@ __build__ = "dev"  # dev, alpha, beta, stable, release
 # 每个版本只保留一个顶层对象，版本内的阶段性记录拆分到 entries 中
 # type 支持: "feature" (新增), "fix" (修复), "optimize" (优化), "breaking" (重大变更)
 APP_CHANGELOG = [
+    {
+        "version": "0.24.8",
+        "date": "2026-10-13",
+        "entries": [
+            {
+                "title": "RimWorld 1.7（Waylith 引擎）兼容修复",
+                "changes": [
+                    { "type": "fix", "text": "新增 RimWorld 1.7 主程序名 RimWorld.exe 识别，恢复游戏安装检测与通过 RimCrow 启动游戏（旧名 RimWorldWin64.exe / RimWorldWin.exe 保留）" },
+                    { "type": "fix", "text": "适配 RimWorld 1.7 玩家日志新路径 <用户数据>/Logs/Player.log，旧路径保留兜底" },
+                    { "type": "fix", "text": "修复 RimWorld 1.7 通过 Steam 启动后无法识别游戏进程、无法进入游戏运行监测的问题" }
+                ]
+            }
+        ]
+    },
     {
         "version": "0.24.7",
         "date": "2026-07-26",
