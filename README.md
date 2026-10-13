@@ -44,8 +44,9 @@ v0.24.7 的候选清单里只有旧名字，检测到的可执行文件为空 �
 本构建的源码就在本仓库，任何系统都能按下面的步骤自己构建或直接跑源码。前置：Git、Node.js 18+（构建前端）、Python 3.11+（推荐 [uv](https://docs.astral.sh/uv/)，会自动准备 3.11 环境）；界面运行时依赖：Windows 需 WebView2 Runtime，macOS 用系统 WebView，Linux 需 WebKitGTK（如 `libwebkit2gtk-4.1` 及对应 gir 包）。
 
 ```bash
-# 1. 克隆（含子模块）。release/v0.24.8 = 含 RimWorld 1.7 兼容修复的分支
-git clone --recurse-submodules -b release/v0.24.8 https://github.com/hogtinbao/RimCrow.git
+# 1. 克隆本仓库（含子模块）。分支 release/v0.24.8 = 含 RimWorld 1.7 兼容修复
+#    本仓库地址：打开仓库页面用 Code 按钮复制，或直接用你的 fork 地址替换下面这行
+git clone --recurse-submodules -b release/v0.24.8 <本仓库地址>
 cd RimCrow
 #    克隆时若漏了 --recurse-submodules，补执行：
 git submodule update --init --recursive
