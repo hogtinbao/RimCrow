@@ -25,6 +25,8 @@ v0.24.7 的候选清单里只有旧名字，检测到的可执行文件为空 �
 
 ## 下载与使用
 
+> **下载渠道只有 GitHub**：本仓库的 Releases 页面，没有蓝奏云或其它网盘镜像。想自己构建/运行源码请看下一节。
+
 1. 在 Releases 下载 `RimCrow-v0.24.8-windows.zip`。
 2. 解压后运行 `RimCrow/RimCrow.exe`（Windows，需要 WebView2 Runtime）。
 3. 首次打开后确认「设置 → 路径」里的游戏安装目录指向 Steam 的 RimWorld 目录。
@@ -36,6 +38,41 @@ v0.24.7 的候选清单里只有旧名字，检测到的可执行文件为空 �
 - `RimCrow/toolmods/RimCrowCompanion/`：随包带的管理器配套 Mod
 - `RimCrow/data/`：公开社区数据库（SteamDB、替换规则、联机兼容表等）
 - `RimCrow/README.md`、`RimCrow/LICENSE`、`RimCrow/doc/致谢.md`
+
+## 自行构建（Windows / macOS / Linux 通用）
+
+本构建的源码就在本仓库，任何系统都能按下面的步骤自己构建或直接跑源码。前置：Git、Node.js 18+（构建前端）、Python 3.11+（推荐 [uv](https://docs.astral.sh/uv/)，会自动准备 3.11 环境）；界面运行时依赖：Windows 需 WebView2 Runtime，macOS 用系统 WebView，Linux 需 WebKitGTK（如 `libwebkit2gtk-4.1` 及对应 gir 包）。
+
+```bash
+# 1. 克隆（含子模块）。release/v0.24.8 = 含 RimWorld 1.7 兼容修复的分支
+git clone --recurse-submodules -b release/v0.24.8 https://github.com/hogtinbao/RimCrow.git
+cd RimCrow
+#    克隆时若漏了 --recurse-submodules，补执行：
+git submodule update --init --recursive
+
+# 2. Python 依赖
+uv sync
+
+# 3. 前端资源（必须，否则界面空白）
+cd frontend && npm ci && npm run build && cd ..
+
+# 4. Steamworks 运行库（Steam 相关功能需要；脚本按当前系统自动放置 dll/so/dylib）
+uv run python scripts/setup_steamworks_runtime.py --sdk /path/to/steamworks_sdk_*.zip
+
+# 5. 启动
+uv run python main.py                          # 桌面窗口
+uv run python main.py --browser                # 浏览器模式
+uv run python main.py --reset-window-state     # 窗口跑到屏幕外时重置
+
+# 6. 可选：自己打发布包（Windows/Linux 单文件，macOS .app），产物在 dist/
+uv run python pack_pyinstaller.py
+
+# 7. 可选：跑测试
+uv run pytest -q tests
+```
+
+- 运行与打包都需要第 4 步产生的 `tools/steamworks/` 运行库；打包还会带上 `data/` 下的社区数据库与 `toolmods/RimCrowCompanion`，缺少时打包脚本会跳过、运行时会按需下载。
+- 平台差异与上游一致：Windows/Linux 打包为单文件，macOS 打包为 `.app`；macOS/Linux 的构建流程未在本机构建验证，命令与上游一致。
 
 ## 使用须知
 
@@ -61,7 +98,10 @@ MIT，见 [LICENSE](./LICENSE)。上游仓库：<https://github.com/Inky-Feather
 This repository hosts a rebuilt package of RimCrow v0.24.7 with the RimWorld 1.7 (Waylith engine)
 compatibility fix: the renamed Windows executable (`RimWorld.exe`), the relocated player log
 (`<user data>/Logs/Player.log`) and the new process name used for game-running detection. Nothing
-else was changed. All credit goes to the upstream author **Inky Feather** and to
-**[@1579486875](https://github.com/1579486875)**, who reported and diagnosed the 1.7 breakage in
-issue #24 / PR #25. Licensed under MIT; see `LICENSE`. Prefer the upstream release once it ships
-the fix: <https://github.com/Inky-Feather/RimCrow/releases>
+else was changed. Building from source works on Windows, macOS and Linux (clone branch
+`release/v0.24.8` with `--recurse-submodules`, `uv sync`, build `frontend/`, then
+`uv run python main.py`) - the build steps are listed above. Downloads are served from this
+repository's Releases only (no third-party mirror). All credit goes to the upstream author
+**Inky Feather** and to **[@1579486875](https://github.com/1579486875)**, who reported and
+diagnosed the 1.7 breakage in issue #24 / PR #25. Licensed under MIT; see `LICENSE`. Prefer the
+upstream release once it ships the fix: <https://github.com/Inky-Feather/RimCrow/releases>
